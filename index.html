@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="">
 <head>
   <meta charset="utf-8" />
   <title>Jean Franco Martinez — Analista de Datos / IA</title>
@@ -11,30 +11,83 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://jeframar.github.io/">
   <style>
+    /* Paleta base + “Platzi vibes” */
     :root{
-      --bg: #f6f7fb; --card:#fff; --text:#1b1f24; --muted:#5a6473; --accent:#3b82f6; --ring: rgba(59,130,246,.35);
-      --chip:#eef2ff; --chip-text:#3730a3; --ok:#16a34a; --border:#e5e7eb;
+      --platzi-green:#98ca3f;
+      --platzi-navy:#121f3d;
+      --platzi-navy-2:#0e1a33;
+
+      --bg: #f6f7fb; 
+      --card:#fff; 
+      --text:#1b1f24; 
+      --muted:#5a6473; 
+      --accent:#3b82f6; 
+      --ring: rgba(59,130,246,.35);
+      --chip:#eef2ff; 
+      --chip-text:#3730a3; 
+      --ok:#16a34a; 
+      --border:#e5e7eb;
+
+      --bg-gradient: radial-gradient(1200px 800px at 10% -10%, #e6f7d6 0%, transparent 40%),
+                     radial-gradient(900px 700px at 100% 0%, #e9f0ff 0%, transparent 40%);
     }
-    *{box-sizing:border-box} html,body{height:100%}
+
+    /* Tema oscuro forzado via data-theme */
+    html[data-theme="dark"]{
+      --bg:#0f1217; 
+      --card:#151924; 
+      --text:#e8eef7; 
+      --muted:#98a2b3; 
+      --accent:#60a5fa; 
+      --chip:#1f2540; 
+      --chip-text:#c7d2fe; 
+      --border:#242b38; 
+      --ring: rgba(96,165,250,.35);
+      --bg-gradient:
+        radial-gradient(1200px 700px at -10% 0%, rgba(152,202,63,.15) 0%, transparent 50%),
+        radial-gradient(900px 700px at 110% -10%, rgba(24,119,242,.10) 0%, transparent 50%),
+        linear-gradient(120deg, var(--platzi-navy), var(--platzi-navy-2));
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
-      background:var(--bg); color:var(--text); line-height:1.55; letter-spacing:.2px;
+      background: var(--bg);
+      background-image: var(--bg-gradient);
+      color:var(--text); line-height:1.55; letter-spacing:.2px;
       display:grid; place-items:center; padding:28px;
+      transition: background-color .25s ease, color .25s ease, background-image .4s ease;
     }
+
+    /* Banda superior estilo Platzi */
+    .brand-band{
+      position:fixed; inset:0 0 auto 0; height:8px; 
+      background: linear-gradient(90deg, var(--platzi-green), #7ec142 33%, #59b63f 66%, var(--platzi-green));
+      opacity:.9;
+    }
+
     .card{
       width:min(960px, 94vw); background:var(--card); border-radius:16px; padding:48px;
       box-shadow: 0 20px 60px rgba(0,0,0,.07);
       border:1px solid var(--border);
+      backdrop-filter: saturate(1.1);
     }
-    header{display:flex; gap:28px; align-items:center; flex-wrap:wrap}
+
+    header{display:flex; gap:28px; align-items:center; flex-wrap:wrap; justify-content:space-between}
+    .head-left{display:flex; gap:28px; align-items:center; flex-wrap:wrap}
+
     .avatar{
-      flex:0 0 84px; height:84px; border-radius:50%; background:linear-gradient(135deg,#e9efff,#fef3c7);
-      display:grid; place-items:center; font-size:42px; box-shadow: inset 0 0 0 2px #fff, 0 2px 8px rgba(0,0,0,.08);
+      flex:0 0 84px; height:84px; border-radius:50%; 
+      background:conic-gradient(from 210deg, #fff 0 25%, #e9efff 0 50%, #fef3c7 0 75%, #fff 0 100%);
+      display:grid; place-items:center; font-size:42px; 
+      box-shadow: inset 0 0 0 2px #fff, 0 2px 8px rgba(0,0,0,.08);
     }
     h1{font-size:clamp(28px,4.5vw,40px); line-height:1.15; margin:0}
     .role{color:var(--muted); margin-top:6px}
     .intro{margin-top:14px; max-width:72ch}
     .cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:22px}
+
     .btn{
       appearance:none; border:1px solid var(--border); background:#fff; color:var(--text);
       padding:12px 16px; border-radius:10px; font-weight:600; text-decoration:none; display:inline-flex; gap:10px; align-items:center;
@@ -44,6 +97,7 @@
     .btn:hover{transform:translateY(-1px); border-color:#cfd8e3}
     .btn.primary{background:var(--accent); border-color:var(--accent); color:#fff}
     .btn.ghost{background:#fff}
+
     .btn svg{width:18px; height:18px}
 
     .grid{display:grid; grid-template-columns: 1.05fr .95fr; gap:26px; margin-top:30px}
@@ -52,27 +106,61 @@
     .panel{border:1px solid var(--border); border-radius:14px; padding:20px 18px; background:#fff}
     .panel h2{font-size:18px; margin:2px 0 12px}
     .chips{display:flex; flex-wrap:wrap; gap:10px}
-    .chip{background:var(--chip); color:var(--chip-text); padding:6px 10px; border-radius:999px; font-weight:600; font-size:.93rem}
+    .chip{
+      background:linear-gradient(180deg, var(--chip), #ffffff);
+      color:var(--chip-text); padding:6px 10px; border-radius:999px; font-weight:600; font-size:.93rem;
+      border:1px solid var(--border);
+    }
+    html[data-theme="dark"] .panel, 
+    html[data-theme="dark"] .card,
+    html[data-theme="dark"] .btn.ghost{ background:var(--card) }
+
     .bullets{padding-left:18px; margin:0}
     .bullets li{margin:6px 0}
     .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:10px}
     .stat{border:1px dashed var(--border); border-radius:10px; padding:12px; text-align:center}
     .stat strong{font-size:1.25rem}
     .availability{display:flex; align-items:center; gap:8px; margin-top:10px; color:#166534; font-weight:700}
+    html[data-theme="dark"] .availability{color:#86efac}
     .dot{width:10px; height:10px; background:var(--ok); border-radius:50%; box-shadow:0 0 0 4px rgba(22,163,52,.15)}
 
     footer{margin-top:18px; color:var(--muted); font-size:.92rem}
 
-    /* Dark mode */
+    /* Toggle de tema */
+    .theme-toggle{
+      margin-left:auto;
+      display:inline-flex; align-items:center; gap:10px;
+      border:1px solid var(--border); background:transparent; color:var(--text);
+      padding:10px 12px; border-radius:10px; font-weight:700; cursor:pointer;
+    }
+    .theme-toggle:focus-visible{outline:none; box-shadow:0 0 0 6px var(--ring)}
+    .theme-toggle .icon{width:18px; height:18px; display:inline-block}
+
+    /* Dark automático si el sistema lo prefiere (cuando no hay preferencia guardada) */
     @media (prefers-color-scheme: dark){
-      :root{ --bg:#0f1217; --card:#151924; --text:#e8eef7; --muted:#98a2b3; --accent:#60a5fa; --chip:#1f2540; --chip-text:#c7d2fe; --border:#242b38; --ring: rgba(96,165,250,.35); }
+      html:not([data-theme="light"]){
+        --bg:#0f1217; 
+        --card:#151924; 
+        --text:#e8eef7; 
+        --muted:#98a2b3; 
+        --accent:#60a5fa; 
+        --chip:#1f2540; 
+        --chip-text:#c7d2fe; 
+        --border:#242b38; 
+        --ring: rgba(96,165,250,.35);
+        --bg-gradient:
+          radial-gradient(1200px 700px at -10% 0%, rgba(152,202,63,.15) 0%, transparent 50%),
+          radial-gradient(900px 700px at 110% -10%, rgba(24,119,242,.10) 0%, transparent 50%),
+          linear-gradient(120deg, var(--platzi-navy), var(--platzi-navy-2));
+      }
       .btn.ghost{background:#141826; color:var(--text)}
       .panel, .card{background:var(--card)}
     }
+
     @media (prefers-reduced-motion: reduce){ .btn:hover{transform:none} }
   </style>
 
-  <!-- Datos estructurados para mejorar el snippet en buscadores -->
+  <!-- Datos estructurados -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -92,50 +180,55 @@
   </script>
 </head>
 <body>
+  <div class="brand-band" aria-hidden="true"></div>
+
   <main class="card" role="main" aria-labelledby="name">
     <header>
-      <div class="avatar" aria-hidden="true">📊</div>
-      <div>
-        <h1 id="name">Jean Franco Martinez</h1>
-        <div class="role">Analista de datos · Antropólogo · Ingeniero de IA</div>
-        <p class="intro">
-          Convierto datos en decisiones: diseño métricas accionables, modelos ML pragmáticos y <em>dashboards</em> que impulsan producto y negocio.
-          Me muevo entre exploración, experimentación y entrega a producción.
-        </p>
-        <nav class="cta" aria-label="Acciones principales">
-          <!-- 👉 Actualiza los href -->
-          <a class="btn primary" href="CV.pdf" target="_blank" rel="noopener">
-            <!-- icono documento -->
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8z"/><path fill="#ffffff44" d="M14 2v6h6"/></svg>
-            Ver CV
-          </a>
-          <a class="btn ghost" href="CV.pdf" download="JeanFrancoMartinez-CV.pdf">
-            <!-- icono descargar -->
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 20h14v-2H5v2zm7-18-5 5h3v6h4V7h3l-5-5z"/></svg>
-            Descargar CV
-          </a>
-          <a class="btn ghost" href="mailto:jeanfranco@email.com?subject=Interés%20laboral%20-%20Jean%20Franco%20Martinez&body=Hola%20Jean%2C%0Avi%20tu%20perfil%20y%20quisiera%20coordinar%20una%20conversaci%C3%B3n.%0A%0A-%20Empresa%3A%0A-%20Rol%3A%0A-%20Rango%20salarial%3A%0A-%20Modalidad%3A%20%28remoto%2Fh%C3%ADbrido%29%0A">
-            <!-- icono email -->
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v1l10 6 10-6V6a2 2 0 0 0-2-2zm0 6.2-8 4.8-8-4.8V18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2z"/></svg>
-            Contacto rápido
-          </a>
-          <a class="btn ghost" href="https://calendly.com/tu-calendly/15min" target="_blank" rel="noopener">
-            <!-- icono calendario -->
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v3H2V6a2 2 0 0 1 2-2h3V2zM2 11h20v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-9z"/></svg>
-            Agendar llamada
-          </a>
-          <a class="btn ghost" href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <!-- icono in -->
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.94 7.5A2.44 2.44 0 1 1 6.9 2.6 2.44 2.44 0 0 1 6.94 7.5zM3.6 21.4h6.6V9H3.6v12.4zM13.4 9v12.4H20V14c0-3-1.6-4.4-3.8-4.4-1.7 0-2.5.9-2.9 1.6V9h-0z"/></svg>
-            LinkedIn
-          </a>
-          <a class="btn ghost" href="https://github.com/jeframar" target="_blank" rel="noopener" aria-label="GitHub">
-            <!-- icono gh -->
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5A12 12 0 0 0 0 12.7c0 5.4 3.4 10 8.2 11.6.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.3-1.2-1.7-1.2-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1.7 1.8 2.8 1.3.1-.8.4-1.3.8-1.6-2.6-.3-5.4-1.3-5.4-6 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.6.1-3.3 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6.2 0c2.4-1.5 3.4-1.2 3.4-1.2.6 1.7.2 3 .1 3.3.8.9 1.2 2 1.2 3.3 0 4.7-2.8 5.7-5.5 6 .4.3.8 1 .8 2v3c0 .3.2.7.8.6C20.6 22.7 24 18.1 24 12.7A12 12 0 0 0 12 .5z"/></svg>
-            GitHub
-          </a>
-        </nav>
+      <div class="head-left">
+        <div class="avatar" aria-hidden="true">📊</div>
+        <div>
+          <h1 id="name">Jean Franco Martinez</h1>
+          <div class="role">Analista de datos · Antropólogo · Ingeniero de IA</div>
+          <p class="intro">
+            Convierto datos en decisiones: diseño métricas accionables, modelos ML pragmáticos y <em>dashboards</em> que impulsan producto y negocio.
+            Me muevo entre exploración, experimentación y entrega a producción.
+          </p>
+          <nav class="cta" aria-label="Acciones principales">
+            <!-- Ver CV (se mantiene) -->
+            <a class="btn primary" href="CV.pdf" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8z"/><path fill="#ffffff44" d="M14 2v6h6"/></svg>
+              Ver CV
+            </a>
+            <!-- Blog (reemplaza Descargar CV) -->
+            <a class="btn ghost" href="https://jeframar.github.io/blog/" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 5h16v2H4V5zm0 4h10v2H4V9zm0 4h16v2H4v-2zm0 4h10v2H4v-2z"/></svg>
+              Blog
+            </a>
+            <a class="btn ghost" href="mailto:jeanfranco@email.com?subject=Interés%20laboral%20-%20Jean%20Franco%20Martinez&body=Hola%20Jean%2C%0Avi%20tu%20perfil%20y%20quisiera%20coordinar%20una%20conversaci%C3%B3n.%0A%0A-%20Empresa%3A%0A-%20Rol%3A%0A-%20Rango%20salarial%3A%0A-%20Modalidad%3A%20%28remoto%2Fh%C3%ADbrido%29%0A">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v1l10 6 10-6V6a2 2 0 0 0-2-2zm0 6.2-8 4.8-8-4.8V18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2z"/></svg>
+              Contacto rápido
+            </a>
+            <a class="btn ghost" href="https://calendly.com/tu-calendly/15min" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v3H2V6a2 2 0 0 1 2-2h3V2zM2 11h20v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-9z"/></svg>
+              Agendar llamada
+            </a>
+            <a class="btn ghost" href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.94 7.5A2.44 2.44 0 1 1 6.9 2.6 2.44 2.44 0 0 1 6.94 7.5zM3.6 21.4h6.6V9H3.6v12.4zM13.4 9v12.4H20V14c0-3-1.6-4.4-3.8-4.4-1.7 0-2.5.9-2.9 1.6V9h-0z"/></svg>
+              LinkedIn
+            </a>
+            <a class="btn ghost" href="https://github.com/jeframar" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5A12 12 0 0 0 0 12.7c0 5.4 3.4 10 8.2 11.6.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.3-1.2-1.7-1.2-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1.7 1.8 2.8 1.3.1-.8.4-1.3.8-1.6-2.6-.3-5.4-1.3-5.4-6 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.6.1-3.3 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6.2 0c2.4-1.5 3.4-1.2 3.4-1.2.6 1.7.2 3 .1 3.3.8.9 1.2 2 1.2 3.3 0 4.7-2.8 5.7-5.5 6 .4.3.8 1 .8 2v3c0 .3.2.7.8.6C20.6 22.7 24 18.1 24 12.7A12 12 0 0 0 12 .5z"/></svg>
+              GitHub
+            </a>
+          </nav>
+        </div>
       </div>
+
+      <!-- Toggle tema -->
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+        <span class="icon" aria-hidden="true">🌙</span>
+        <span class="label">Tema</span>
+      </button>
     </header>
 
     <section class="grid" aria-label="Resumen profesional y evidencias">
@@ -185,7 +278,32 @@
   </main>
 
   <script>
+    // Año dinámico
     document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Gestión de tema con preferencia guardada
+    (function(){
+      const root = document.documentElement;
+      const btn = document.getElementById('themeToggle');
+      const icon = btn.querySelector('.icon');
+
+      const saved = localStorage.getItem('theme'); // 'light' | 'dark' | null
+      if(saved === 'light' || saved === 'dark'){
+        root.setAttribute('data-theme', saved);
+        icon.textContent = saved === 'dark' ? '🌙' : '🌞';
+      }else{
+        // sin preferencia: dejamos que el @media gobierne; no seteamos data-theme
+        icon.textContent = matchMedia('(prefers-color-scheme: dark)').matches ? '🌙' : '🌞';
+      }
+
+      btn.addEventListener('click', () => {
+        const current = root.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        icon.textContent = next === 'dark' ? '🌙' : '🌞';
+      });
+    })();
   </script>
 </body>
 </html>
